@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBtn: ImageButton
     private lateinit var menuCloseBtn: ImageButton
     private lateinit var container: FrameLayout
+    private lateinit var masthead: ImageView
+    private lateinit var tvTitle: TextView
 //
 //    override fun getStartTheme(): AppTheme {
 //        return LightTheme()
@@ -48,6 +52,8 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigation_view)
         menuBtn = findViewById(R.id.menu_btn)
         container = findViewById(R.id.fragment_container)
+        masthead = findViewById(R.id.masthead)
+        tvTitle = findViewById(R.id.title)
 
         navHeader = navigationView.getHeaderView(0)
         menuCloseBtn = navHeader.findViewById(R.id.nav_close_btn)
@@ -78,8 +84,19 @@ class MainActivity : AppCompatActivity() {
             } else {
                 // Handle menu item selected
                 when (menuItem.itemId) {
-                    R.id.nav_main -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MainFragment(taskArrayList)).commit()
-                    R.id.nav_about -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AboutFragment()).commit()
+                    R.id.nav_main -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, MainFragment(taskArrayList)).commit()
+                        masthead.setImageResource(R.drawable.masthead)
+                        tvTitle.text = "What's up, Vergil!"
+
+                    }
+                    R.id.nav_about -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, AboutFragment()).commit()
+                        masthead.setImageResource(R.drawable.about_masthead)
+                        tvTitle.text = "About this app"
+                    }
                 }
 
                 menuItem.isChecked = true
